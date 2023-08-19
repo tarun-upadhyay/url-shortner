@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <header
-      className={`px-8 bordermd:px-40 md:py-2 py-6 bg-white-800 sticky top-0 z-[100] bg-neutral-50 w-full ${
+      className={`px-8 md:px-40 md:py-2 py-6 bg-white-800 sticky top-0 z-[100] bg-neutral-50 w-full ${
         handleShow ? "shadow-sm" : ""
       }`}
     >
