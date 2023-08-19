@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,13 +17,48 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "PT Sans Caption", sans-serif;
+}
+body::-webkit-scrollbar,
+.hideScrollBar::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #c7d3ff;
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #222e50 !important;
+}
+
+.hideScrollBar::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.hideScrollBar::-webkit-scrollbar-track {
+  display: none;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  background: #fff;
+}
+
+.neon-underline:hover {
+  text-decoration: underline;
+  text-decoration-color: #52dee5;
+}
+.active {
+  font-weight: bold;
+  color: #52dee5;
+
+  text-decoration-color: #52dee5;
 }
