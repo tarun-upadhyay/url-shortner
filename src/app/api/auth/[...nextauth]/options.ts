@@ -37,9 +37,23 @@ export const options: NextAuthOptions = {
     //   },
     // }),
   ],
- 
+
+ pages:{
+    signIn:"/login"
+ }
  
 };
 
+import { getToken } from "next-auth/jwt"
+
+const secret = process.env.NEXTAUTH_SECRET
+
+export default async function handler(req:any, res:any) {
+  // if using `NEXTAUTH_SECRET` env variable, we detect it, and you won't actually need to `secret`
+  // const token = await getToken({ req })
+  const token = await getToken({ req, secret })
+  console.log("JSON Web Token", token)
+  res.end()
+}
 //Random secret key creator
 // Go to terminal and paste it $ openssl rand -base64 32
