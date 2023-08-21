@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
-import { options } from "./options";
-const handler = NextAuth(options);
+import GitHubProvider from "next-auth/providers/github";
+import { authOptions } from "./options";
 
-export { handler as GET, handler as POST}
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
