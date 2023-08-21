@@ -1,22 +1,20 @@
-import Image from "next/image";
 import Header from "./Components/Header";
 import { getToken } from "next-auth/jwt";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/options";
+
 import { redirect } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { authOptions } from "./api/auth/[...nextauth]/options";
+import { useRouter } from "next/router";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
-  }
-
+  console.log(session, "server side");
   return (
     <div>
       lorem*50
       <div>
-        <p>{JSON.stringify(session)}</p>
-        <button className="bg-orange-300 rounded-md p-2">Sign out</button>
+        <p></p>
       </div>
     </div>
   );

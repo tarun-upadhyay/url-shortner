@@ -98,7 +98,7 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: String,
-    required: [true, "Please provide password"],
+
     minlength: 6,
     select: false,
     trim: true,

@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
-    const token = user.createJWT();
+    // const token:string = user.createJWT();
     return NextResponse.json(
-      { msg: "Sigin Succed", token, user: { email: user.email, name: user.name } },
+      { msg: "Sigin Succed", user: { email: user.email, name: user.name } },
       { status: 200 }
     );
   } catch (error) {

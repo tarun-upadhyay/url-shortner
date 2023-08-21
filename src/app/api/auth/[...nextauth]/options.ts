@@ -1,5 +1,5 @@
 import { connect } from "@/database/mongo.config";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { AuthOptions } from "next-auth";
@@ -11,9 +11,19 @@ export const authOptions: AuthOptions = {
     signIn: "/login",
   },
 
+  //here we are storing password
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account, profile, credentials }) {
       connect();
+      console.log(
+        user,
+        "user",
+        "email=>",
+
+        "account=>",
+        "checking",
+        account
+      );
       try {
         const findUser = await User.findOne({ email: user.email });
         if (findUser) {
@@ -27,8 +37,9 @@ export const authOptions: AuthOptions = {
       }
     },
   },
+
   providers: [
-    Credentials({
+    CredentialsProvider({
       name: "Welcome Back",
       type: "credentials",
 
@@ -43,9 +54,16 @@ export const authOptions: AuthOptions = {
       async authorize(credentials, req) {
         // * Connect to the MongoDb
         //ye hamara wala hai jo create kia hai humne
-        console.info("The credentials and req info", credentials, req);
+        // console.info(
+        //   "The credentials and req info",
+        //   credentials,
+        //   "checking",
+        //   req,
+        //   "bye bye"
+        // );
         connect();
         const user = await User.findOne({ email: credentials?.email });
+        console.log(user);
         if (user) {
           return user;
         } else {
@@ -54,14 +72,14 @@ export const authOptions: AuthOptions = {
       },
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
 
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID!,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    // }),
     // ...add more providers here
   ],
 };
