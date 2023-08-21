@@ -1,14 +1,41 @@
 "use client";
 import Link from "next/link";
+import axios from "axios";
 import React, { useState } from "react";
-
+import { redirect, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 export default function Login() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setError] = useState<LoginErrorType>();
+  const params = useSearchParams();
   const [inputVal, setInputVal] = useState({
     email: "",
     password: "",
   });
   function handleSubmit() {
-    console.log(inputVal);
+    setLoading(true);
+
+    axios
+      .post("/api/auth/login", inputVal)
+      .then((res) => {
+        setLoading(false);
+        if (res.status == 200) {
+          //ye apne wla hai
+          signIn("credentials", {
+            email: inputVal.email,
+            password: inputVal.password,
+            callbackUrl: "/",
+            redirect: true,
+          });
+          setError({});
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err.response.data.errors);
+
+        return console.log("The error is", err.response.data);
+      });
   }
   return (
     <section>
@@ -40,6 +67,13 @@ export default function Login() {
               Create a free account
             </Link>
           </p>
+          {params.get("message") ? (
+            <p className="bg-green-400 font-bold rounded-md p-4 mt-3 text-center">
+              {params.get("message")}
+            </p>
+          ) : (
+            <></>
+          )}
           <form action="#" method="POST" className="mt-8">
             <div className="space-y-5">
               <div>
@@ -59,6 +93,9 @@ export default function Login() {
                       setInputVal({ ...inputVal, email: e.target.value })
                     }
                   ></input>
+                  <span className="text-red-500 font-bold">
+                    {errors?.email}
+                  </span>
                 </div>
               </div>
               <div>
@@ -88,15 +125,20 @@ export default function Login() {
                       setInputVal({ ...inputVal, password: e.target.value })
                     }
                   ></input>
+                  <span className="text-red-500 font-bold">
+                    {errors?.password}
+                  </span>
                 </div>
               </div>
               <div>
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                  className={`inline-flex w-full items-center justify-center rounded-md  px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80  ${
+                    loading ? "bg-gray-600" : "bg-black"
+                  }`}
                   onClick={handleSubmit}
                 >
-                  Sign in
+                  {loading ? "Processing.." : "Login"}
                 </button>
               </div>
             </div>

@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "./Components/Header";
+import NextAuthProvider from "@/provider/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="flex flex-col overflow-x-hidden items-center justify-between">
           <Header />
-          {children}
+          <NextAuthProvider> {children}</NextAuthProvider>
         </main>
       </body>
     </html>

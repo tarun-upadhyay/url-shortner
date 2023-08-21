@@ -16,21 +16,42 @@ export async function POST(request: NextRequest) {
 
     if (!email || !password)
       return NextResponse.json(
-        { msg: "Please provide email and password" },
+        {
+          errors: {
+            email: "Please Enter your email id.",
+            password: "Please enter your password",
+          },
+        },
         { status: 400 }
       );
 
     const user = await User.findOne({ email }).select("+password");
     if (!user)
-      return NextResponse.json({ msg: "Invalid Credentials" }, { status: 404 });
+      return NextResponse.json(
+        {
+          msg: "Invalid Credentials",
+          errors: {
+            email: "No User found in our system with above email.",
+          },
+        },
+        { status: 404 }
+      );
 
     const isPasswordCorrect: boolean = await user.comparePassword(password);
     if (!isPasswordCorrect) {
-      return NextResponse.json({ msg: "Invalid Credentials" }, { status: 404 });
+      return NextResponse.json(
+        {
+          msg: "Invalid Credentials",
+          errors: {
+            password: "Please check your credentials.",
+          },
+        },
+        { status: 404 }
+      );
     }
-
+    const token = user.createJWT();
     return NextResponse.json(
-      { msg: "Sigin Succed", user: { email: user.email, name: user.name } },
+      { msg: "Sigin Succed", token, user: { email: user.email, name: user.name } },
       { status: 200 }
     );
   } catch (error) {

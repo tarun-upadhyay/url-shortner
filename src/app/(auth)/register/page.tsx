@@ -1,16 +1,39 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Register() {
+  const router = useRouter();
   const [inputVal, setInputVal] = useState({
-    name: "",
     email: "",
     password: "",
+    name: "",
     password_confirmation: "",
   });
-  const handleSubmit = () => {
-    console.log(inputVal);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<registerErrorType>({});
+  const submitForm = async () => {
+    setLoading(true);
+
+    axios
+      .post("/api/auth/register", inputVal)
+      .then((res) => {
+        console.log("The response is", res.data);
+        const response = res.data;
+        setLoading(false);
+        if (res.status == 200) {
+          return router.push(`/login?message=${response.msg}`);
+        } else {
+          return setErrors({});
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        setErrors(err.response.data);
+        return console.log("The error is", err.response.data);
+      });
   };
   return (
     <section>
@@ -61,6 +84,7 @@ export default function Register() {
                       setInputVal({ ...inputVal, name: e.target.value })
                     }
                   ></input>
+                  <span className="text-red-500 font-bold">{errors?.name}</span>
                 </div>
               </div>
               <div>
@@ -80,6 +104,9 @@ export default function Register() {
                       setInputVal({ ...inputVal, email: e.target.value })
                     }
                   ></input>
+                  <span className="text-red-500 font-bold">
+                    {errors?.email}
+                  </span>
                 </div>
               </div>
               <div>
@@ -101,6 +128,9 @@ export default function Register() {
                       setInputVal({ ...inputVal, password: e.target.value })
                     }
                   ></input>
+                  <span className="text-red-500 font-bold">
+                    {errors?.password}
+                  </span>
                 </div>
               </div>
               <div>
@@ -130,10 +160,12 @@ export default function Register() {
               <div>
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                  onClick={handleSubmit}
+                  className={`inline-flex w-full items-center justify-center rounded-md px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 ${
+                    loading ? "bg-gray" : "bg-black"
+                  }`}
+                  onClick={submitForm}
                 >
-                  Register
+                  {loading ? "Processing" : "Register"}
                 </button>
               </div>
             </div>
