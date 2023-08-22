@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className="flex flex-col overflow-x-hidden items-center justify-between">
-         
+         <Header/>
        {children}
         </main>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -170,14 +171,21 @@ export default function Register() {
               </div>
             </div>
           </form>
+          <p className="my-5 text-center">-- OR --</p>
           <div className="mt-3 space-y-3">
             <button
               type="button"
-              className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+              className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-rose-500 px-3.5 py-2.5 font-semibold text-white transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+              onClick={() => {
+                return signIn("google", {
+                  callbackUrl: "/",
+                  redirect: true,
+                });
+              }}
             >
               <span className="mr-2 inline-block">
                 <svg
-                  className="h-6 w-6 text-rose-500"
+                  className="h-6 w-6 text-white-500"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
@@ -187,21 +195,33 @@ export default function Register() {
               </span>
               Sign in with Google
             </button>
+
             <button
               type="button"
-              className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+              className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400  px-3.5 py-2.5 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-black focus:bg-gray-100 focus:text-black focus:outline-nonetext-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 "
+              onClick={() => {
+                return signIn("github", {
+                  callbackUrl: "/",
+                  redirect: true,
+                });
+              }}
             >
               <span className="mr-2 inline-block">
                 <svg
-                  className="h-6 w-6 text-[#2563EB]"
+                  className="w-4 h-4 mr-2"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
                   fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
-                  <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </span>
-              Sign in with Facebook
+              Sign in with GitHub
             </button>
           </div>
         </div>
