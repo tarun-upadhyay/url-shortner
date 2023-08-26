@@ -4,7 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.placeholder-text-base {
+            font-size: 5rem !important; /* Adjust the font size as needed */
+          }
 
 :root {
   --foreground-rgb: 0, 0, 0;

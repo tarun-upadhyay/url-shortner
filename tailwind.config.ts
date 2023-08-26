@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 const withMT = require("@material-tailwind/react/utils/withMT");
-const defaultTheme = require("tailwindcss/defaultTheme");
+
 const config: Config = withMT({
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -22,6 +22,10 @@ const config: Config = withMT({
         heading: "#252628",
         para: "#56575b",
       },
+      fontFamily:{
+        poppins:["Poppins"]
+      }
+      
     },
   },
   plugins: [],

@@ -18,8 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <main className="flex flex-col overflow-x-hidden items-center justify-between">
           <Header />
+        <main className="flex flex-col overflow-x-hidden items-center justify-between">
           {children}
         </main>
       </body>
