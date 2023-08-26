@@ -12,13 +12,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const gitHubSigin = () => {
-    signIn("github", {
-      callbackUrl: "/",
-      redirect: true,
-    });
-  };
-
+  
   function handleSubmit() {
     setLoading(true);
 
