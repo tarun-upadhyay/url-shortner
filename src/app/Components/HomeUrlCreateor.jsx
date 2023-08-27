@@ -37,7 +37,7 @@ const HomeUrlCreateor = () => {
             What would you like to create?
           </h1>
           <div className="bg-white md:w-[90%] m-auto mt-10 p-10 pt-16">
-            {/* <Tabs value="shortlink">
+            <Tabs value="shortlink">
               <TabsHeader>
                 {data.map(({ label, value, icon }) => (
                   <Tab key={value} value={value}>
@@ -115,7 +115,7 @@ const HomeUrlCreateor = () => {
                   </TabPanel>
                 ))}
               </TabsBody>
-            </Tabs> */}
+            </Tabs>
             <div className="text-center m-4">
               <article className="text-center font-bold text-2xl">
                 No credit card required. Your free plan includes:
